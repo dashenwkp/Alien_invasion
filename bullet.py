@@ -24,7 +24,7 @@ class Bullet(Sprite):
         # 更新子弹的准确位置
         self.y -= self.settings.bullet_speed
         # 更新表示子弹的rect的位置
-        self.rect = self.y
+        self.rect.y = self.y
 
     def draw_bullet(self):
         '''在屏幕上绘制子弹'''
