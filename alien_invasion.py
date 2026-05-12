@@ -1,4 +1,3 @@
-# 我无法理解这段代码中外星人是怎么越来越多的
 import sys
 
 import pygame
