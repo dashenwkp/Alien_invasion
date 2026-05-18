@@ -12,11 +12,11 @@ class Settings:
         self.ship_speed = 10
 
         # 子弹的设置
-        self.bullet_speed = 2.0
-        self.bullet_width = 3
+        self.bullet_speed = 10.0 # 书中推荐值是2.5
+        self.bullet_width = 3000 # 默认值是3
         self.bullet_height = 15
         self.bullet_color = (60, 60, 60)
-        self.bullets_allowed = 3
+        self.bullets_allowed = 3 # 默认值是3
 
         # 外星人的设置
         self.alien_speed = 1.0
