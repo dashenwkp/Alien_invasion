@@ -12,7 +12,7 @@ class Button:
         self.width, self.height = 200, 50
         self.button_color = (0, 135, 0)
         self.text_color = (255, 255, 255)
-        self.font = pygame.font.SysFont(None, 48)
+        self.font = pygame.font.Font(r'C:\Windows\Fonts\arial.ttf', 48) # 书中是self.font = pygame.font.SysFont(None, 48), 但我在游戏本上运行时报错了，只能更改成self.font = pygame.font.Font(r'C:\Windows\Fonts\arial.ttf', 48)
 
         # 创建按钮的rect对象, 并使其居中
         self.rect = pygame.Rect(0, 0, self.width, self.height)
