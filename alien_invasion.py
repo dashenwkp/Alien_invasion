@@ -39,6 +39,7 @@ class AlienInvasion:
 
         # 创建play按钮
         self.play_button = Button(self, 'Play')
+        self._make_difficulty_buttons()
 
     def run_game(self):
         '''开始游戏的主循环'''
@@ -52,6 +53,21 @@ class AlienInvasion:
                 
             self._update_screen()
             self.clock.tick(60)
+
+    def _make_difficulty_buttons(self):
+        '''制造不同难度的按钮'''
+        self.easy_button = Button(self, 'Easy')
+        self.medium_button = Button(self, 'Medium')
+        self.hard_button = Button(self, 'Hard')
+        self.easy_button.rect.top = (
+            self.play_button.rect.top + 1.5 * self.play_button.rect.height)
+        self.easy_button.update_msg_pos()
+        self.medium_button.rect.top = (
+            self.easy_button.rect.top + 1.5 * self.play_button.rect.height)
+        self.medium_button.update_msg_pos()
+        self.hard_button.rect.top = (
+            self.medium_button.rect.top + 1.5 * self.play_button.rect.height)
+        self.hard_button.update_msg_pos()
     
     def _check_events(self):
         '''相应按键和鼠标事件'''
@@ -65,6 +81,7 @@ class AlienInvasion:
             elif event.type == pygame.MOUSEBUTTONDOWN:
                 mouse_pos = pygame.mouse.get_pos()
                 self._check_play_button(mouse_pos)
+                self._check_difficulty_buttons(mouse_pos)
 
     def _check_play_button(self, mouse_pos):
         '''在玩家单机Play按钮时开始新游戏'''
@@ -86,6 +103,18 @@ class AlienInvasion:
 
             # 隐藏光标
             pygame.mouse.set_visible(False)
+
+    def _check_difficulty_buttons(self, mouse_pos):
+        '''在单击不同难度按钮时调整游戏的难度'''
+        easy_clicked = self.easy_button.rect.collidepoint(mouse_pos)
+        medium_clicked = self.medium_button.rect.collidepoint(mouse_pos)
+        hard_clicked = self.hard_button.rect.collidepoint(mouse_pos)
+        if easy_clicked and not self.game_active:
+            self.settings.difficulty_level = 'easy'
+        elif medium_clicked and not self.game_active:
+            self.settings.difficulty_level = 'medium'
+        elif hard_clicked and not self.game_active:
+            self.settings.difficulty_level = 'hard'
         
     def _check_keydown_events(self, event):
         '''响应按下'''
@@ -160,6 +189,9 @@ class AlienInvasion:
         # 如果游戏处于非活动状态, 就绘制Play按钮
         if not self.game_active:
             self.play_button.draw_button()
+            self.easy_button.draw_button()
+            self.medium_button.draw_button()
+            self.hard_button.draw_button()
 
         pygame.display.flip()
 

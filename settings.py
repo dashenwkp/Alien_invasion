@@ -20,15 +20,33 @@ class Settings:
         # 外星人的设置
         self.fleet_drop_speed = 10 # 默认值10
 
+        # 游戏默认难度为中等
+        self.difficulty_level = 'medium'
+
         # 以什么速度加快游戏的节奏
         self.speedup_scale = 2 # 默认值1.1
         self.initialize_dynamic_settings()
 
     def initialize_dynamic_settings(self):
         '''初始化随游戏进行而变化的设置'''
-        self.ship_speed = 10
-        self.bullet_speed = 10.0 # 书中推荐值是2.5
-        self.alien_speed = 1.0 # 默认值1.0
+        if self.difficulty_level == 'easy':
+            self.ship_limit = 5
+            self.bullets_allowed = 10
+            self.ship_speed = 0.75
+            self.bullet_speed = 1.5
+            self.alien_speed = 0.5
+        elif self.difficulty_level == 'medium':
+            self.ship_limit = 3
+            self.bullets_allowed = 3
+            self.ship_speed = 1.5
+            self.bullet_speed = 3.0
+            self.alien_speed = 1.0
+        elif self.difficulty_level == 'hard':
+            self.ship_limit = 2
+            self.bullets_allowed = 3
+            self.ship_speed = 3.0
+            self.bullet_speed = 6.0
+            self.alien_speed = 2.0
 
         # fleet_direction为1表示向右移动，为-1表示向左移动
         self.fleet_direction = 1

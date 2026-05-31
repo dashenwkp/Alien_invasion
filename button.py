@@ -27,6 +27,10 @@ class Button:
         self.msg_image_rect = self.msg_image.get_rect()
         self.msg_image_rect.center = self.rect.center
 
+    def update_msg_pos(self):
+        '''使文字位于按钮的中间'''
+        self.msg_image_rect.center = self.rect.center
+
     def draw_button(self):
         '''绘制一个用颜色填充的按钮, 再绘制文本'''
         self.screen.fill(self.button_color, self.rect)
