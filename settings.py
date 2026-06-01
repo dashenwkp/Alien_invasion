@@ -9,7 +9,7 @@ class Settings:
         self.bg_color = (230, 230, 230)
 
         # 子弹的设置
-        self.bullet_width = 3000 # 默认值是3
+        self.bullet_width = 3 # 默认值是3
         self.bullet_height = 15
         self.bullet_color = (60, 60, 60)
 
