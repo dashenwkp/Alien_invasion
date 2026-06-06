@@ -1,5 +1,6 @@
 import sys
 from time import sleep
+from pathlib import Path
 
 import pygame
 
@@ -20,6 +21,8 @@ class AlienInvasion:
         pygame.init()
         self.clock = pygame.time.Clock()
         self.settings = Settings()
+        self.path = Path('high_score.txt')
+        self.contents = self.path.read_text().strip()
 
         self.screen = pygame.display.set_mode((0, 0), pygame.FULLSCREEN)
         self.settings.screen_width = self.screen.get_rect().width
@@ -75,6 +78,7 @@ class AlienInvasion:
         '''相应按键和鼠标事件'''
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
+                self._write_high_score()
                 sys.exit()
             elif event.type == pygame.KEYDOWN:
                 self._check_keydown_events(event)
@@ -128,9 +132,14 @@ class AlienInvasion:
         elif event.key == pygame.K_LEFT:
             self.ship.moving_left = True
         elif event.key == pygame.K_q:
+            self._write_high_score()
             sys.exit()
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
+
+    def _write_high_score(self):
+        '''将最高分写入文件'''
+        self.path.write_text(str(self.stats.high_score))
 
     def _check_keyup_events(self, event):
         '''响应释放'''
