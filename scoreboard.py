@@ -16,10 +16,13 @@ class ScoreBoard:
         # 显示得分信息时使用的字体设置
         self.text_color = (30, 30, 30)
         self.font = pygame.font.Font(r'C:\Windows\Fonts\arial.ttf', 48)
-
-        # 准备包含最高分和当前得分的图像
-        self.prep_score()
+        
+        self.prep_images()
         self.prep_high_score()
+
+    def prep_images(self):
+        '''准备得分, 等级和新的飞船的图像'''
+        self.prep_score()
         self.prep_level()
         self.prep_ships()
 

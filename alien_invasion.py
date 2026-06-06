@@ -21,6 +21,7 @@ class AlienInvasion:
         pygame.init()
         self.clock = pygame.time.Clock()
         self.settings = Settings()
+        # 读取文件中的最高分
         self.path = Path('high_score.txt')
         self.contents = self.path.read_text().strip()
 
@@ -44,6 +45,8 @@ class AlienInvasion:
 
         # 创建play按钮
         self.play_button = Button(self, 'Play')
+
+        # 制作用于调整难度的按钮
         self._make_difficulty_buttons()
 
     def run_game(self):
@@ -97,9 +100,7 @@ class AlienInvasion:
             self.settings.initialize_dynamic_settings()
             # 重置游戏的统计信息
             self.stats.reset_stats()
-            self.sb.prep_score()
-            self.sb.prep_level()
-            self.sb.prep_ships()
+            self.sb.prep_images()
             self.game_active = True
 
             # 清空外星人列表和子弹列表
@@ -242,9 +243,13 @@ class AlienInvasion:
             self._create_fleet()
             self.settings.increase_speed()
 
-            # 提高等级
-            self.stats.level += 1
-            self.sb.prep_level()
+            self._start_new_level()
+
+    def _start_new_level(self):
+        '''开始新的等级'''
+        # 提高等级
+        self.stats.level += 1
+        self.sb.prep_level()
 
     def _update_aliens(self):
         '''检查是否有外星人位于屏幕边缘, 并更新整个外星舰队的位置'''
