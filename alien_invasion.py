@@ -35,7 +35,7 @@ class AlienInvasion:
         self.sb = ScoreBoard(self)
 
         self.ship = Ship(self)
-        self.bulltes = pygame.sprite.Group()
+        self.bullets = pygame.sprite.Group()
         self.aliens = pygame.sprite.Group()
 
         self._create_fleet()
@@ -109,7 +109,7 @@ class AlienInvasion:
 
         # 清空外星人列表和子弹列表
         self.aliens.empty()
-        self.bulltes.empty()
+        self.bullets.empty()
 
         # 创建一个新的外星舰队, 并将飞船放在屏幕底部的中央
         self._create_fleet()
@@ -157,9 +157,9 @@ class AlienInvasion:
         
     def _fire_bullet(self):
         '''创建一颗子弹, 并将其加入编组bullets'''
-        if len(self.bulltes) < self.settings.bullets_allowed:
+        if len(self.bullets) < self.settings.bullets_allowed:
             new_bullet = Bullet(self)
-            self.bulltes.add(new_bullet)
+            self.bullets.add(new_bullet)
 
     def _create_fleet(self):
         '''创建一个外星舰队'''
@@ -202,7 +202,7 @@ class AlienInvasion:
     def _update_screen(self):
         '''更新屏幕上的图像，并切换到新屏幕'''
         self.screen.fill(self.settings.bg_color)
-        for bullet in self.bulltes.sprites():
+        for bullet in self.bullets.sprites():
             bullet.draw_bullet()
         self.ship.blitme()
         self.aliens.draw(self.screen)
@@ -222,12 +222,12 @@ class AlienInvasion:
     def _update_bullets(self):
         '''更新子弹的位置并删除已消失的子弹'''
         # 更新子弹的位置
-        self.bulltes.update()
+        self.bullets.update()
 
         # 删除已消失的子弹
-        for bullet in self.bulltes.copy():
+        for bullet in self.bullets.copy():
             if bullet.rect.bottom <= 0:
-                self.bulltes.remove(bullet)
+                self.bullets.remove(bullet)
 
         self._check_bullet_alien_collisions()
 
@@ -235,7 +235,7 @@ class AlienInvasion:
         '''相应子弹和外星人的碰撞'''
         # 删除发生碰撞的子弹和外星人
         collisions = pygame.sprite.groupcollide(
-            self.bulltes, self.aliens, True, True)
+            self.bullets, self.aliens, True, True)
         
         if collisions:
             for aliens in collisions.values():
@@ -245,7 +245,7 @@ class AlienInvasion:
         
         if not self.aliens:
             # 删除现有的子弹并创建一个新的外星舰队
-            self.bulltes.empty()
+            self.bullets.empty()
             self._create_fleet()
             self.settings.increase_speed()
 
@@ -278,7 +278,7 @@ class AlienInvasion:
 
             # 清空外星人列表和子弹列表
             self.aliens.empty()
-            self.bulltes.empty()
+            self.bullets.empty()
 
             # 创建一个新的外星舰队, 并将飞船放在屏幕底部的中央
             self._create_fleet()
