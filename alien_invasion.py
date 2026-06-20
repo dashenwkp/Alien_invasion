@@ -96,23 +96,27 @@ class AlienInvasion:
         '''在玩家单机Play按钮时开始新游戏'''
         button_clicked = self.play_button.rect.collidepoint(mouse_pos)
         if button_clicked and not self.game_active:
-            # 还原游戏设置
-            self.settings.initialize_dynamic_settings()
-            # 重置游戏的统计信息
-            self.stats.reset_stats()
-            self.sb.prep_images()
-            self.game_active = True
+            self._start_game()
 
-            # 清空外星人列表和子弹列表
-            self.aliens.empty()
-            self.bulltes.empty()
+    def _start_game(self):
+        '''开始新游戏'''
+        # 还原游戏设置
+        self.settings.initialize_dynamic_settings()
+        # 重置游戏的统计信息
+        self.stats.reset_stats()
+        self.sb.prep_images()
+        self.game_active = True
 
-            # 创建一个新的外星舰队, 并将飞船放在屏幕底部的中央
-            self._create_fleet()
-            self.ship.center_ship()
+        # 清空外星人列表和子弹列表
+        self.aliens.empty()
+        self.bulltes.empty()
 
-            # 隐藏光标
-            pygame.mouse.set_visible(False)
+        # 创建一个新的外星舰队, 并将飞船放在屏幕底部的中央
+        self._create_fleet()
+        self.ship.center_ship()
+
+        # 隐藏光标
+        pygame.mouse.set_visible(False)
 
     def _check_difficulty_buttons(self, mouse_pos):
         '''在单击不同难度按钮时调整游戏的难度'''
@@ -137,6 +141,8 @@ class AlienInvasion:
             sys.exit()
         elif event.key == pygame.K_SPACE:
             self._fire_bullet()
+        elif event.key == pygame.K_p:
+            self._start_game()
 
     def _write_high_score(self):
         '''将最高分写入文件'''
